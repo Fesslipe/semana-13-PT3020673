@@ -1,33 +1,33 @@
 import unittest
-from aluno import AlunoClass
-from turma import TurmaClass
+import aluno as a;
+import turma as t;
 
-class alunoTest(unittest.TestCase):
-    def setUp(self):
-        print(f"Inicializando o teste: {self._testMethodName}")
+class turmaTest(unittest.TestCase):
 
-        # Configuração do mock do MongoDB
-        self.mock_conexao = mongomock.MongoClient()
-        self.mock_db = self.mock_conexao['faculdade']  # Banco de dados fictício
+  def setUp(self):
+    print('Teste', self._testMethodName, 'sendo executado...');
+    self.alunos = [];
+    self.alunos.append(a.Aluno('Fabio', 'Teixeira', 11));
+    self.alunos.append(a.Aluno('Fabiano', 'Teixeira', 7));
+    self.alunos.append(a.Aluno('Melissa', 'Teixeira', 8));
+    self.alunos.append(a.Aluno('Rafael', 'Teixeira', 9));
+    self.alunos.append(a.Aluno('Angela', 'Teixeira', 6));
+    self.alunos.append(a.Aluno('Angela', 'Teixeira', -1));    
+    self.turmaObject = t.Turma();
+    self.turmaObject.cadastrarAlunos(self.alunos);
+  
+  def tearDown(self):
+    print('Teste', self._testMethodName, 'finalizado.'); 
+  
+  def testMaior(self):      
+    self.assertEqual(9, self.turmaObject.maiorNota.nota, 'Erro ao encontrar maior nota');
 
-        # Criando objetos para os testes
-        self.aluno = AlunoClass('Feslipe', 'Queiroz', 10)
-        self.turma = TurmaClass()
-        self.turma.cadastrarAlunos([self.aluno])
+  def testMenor(self):    
+    self.assertEqual(6, self.turmaObject.menorNota.nota, 'Erro ao encontrar menor nota');
 
-    def test_salvarAluno(self):   
-        resposta = self.aluno.salvar(conexao=self.mock_db, colecao='alunos')
-        self.assertEqual(True, resposta, 'Aluno não foi cadastrado corretamente!')
-        print("Teste 1 (Salvar Aluno): Sucesso! Aluno cadastrado corretamente.")
-
-    def test_salvarTurma(self):   
-        resposta = self.turma.salvar(conexao=self.mock_db, colecao='turma')
-        self.assertEqual(True, resposta, 'Turma cadastrada incorretamente!')
-        print("Teste 2 (Salvar Turma): Sucesso! Turma cadastrada corretamente.")
-
-    def tearDown(self):
-        print(f"Finalizando o teste: {self._testMethodName}")
+  def testIntervalo(self):    
+    self.assertTrue((self.turmaObject.menorNota.nota > 0 and self.turmaObject.maiorNota.nota <= 10), 'Erro ao verificar intervalo')    
 
 
 if __name__ == "__main__":
-    unittest.main()
+  unittest.main()
