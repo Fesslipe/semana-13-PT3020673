@@ -17,12 +17,3 @@ class TurmaClass:
     print('Quantidade de alunos:', len(self.turma));
     for x in self.turma:      
       print(x.mostrarAluno());
-
-  def salvar(self, conexao, colecao):    
-    mydict = self.__dict__;
-    mydict['turma'] = [i.__dict__ for i in self.turma]
-    mydict['menorNota'] = self.menorNota.__dict__;
-    mydict['maiorNota'] = self.maiorNota.__dict__;
-    x = conexao[colecao].insert_one(mydict)    
-    return x.acknowledged;
-
