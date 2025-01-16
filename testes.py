@@ -1,9 +1,6 @@
 import unittest
 from aluno import AlunoClass
 from turma import TurmaClass
-from conexao import ConexaoClass
-import mongomock  # Projeto: https://github.com/mongomock/mongomock
-
 
 class alunoTest(unittest.TestCase):
     def setUp(self):
