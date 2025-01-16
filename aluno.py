@@ -6,8 +6,3 @@ class AlunoClass:
 
   def mostrarAluno(self):
     return 'Aluno: ' + self.nome + ' ' + self.sobrenome + ' - Nota: ' + str(self.nota)
-
-  def salvar(self, conexao, colecao):    
-    mydict = self.__dict__
-    x = conexao[colecao].insert_one(mydict)
-    return x.acknowledged
